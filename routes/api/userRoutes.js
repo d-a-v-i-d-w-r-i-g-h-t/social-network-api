@@ -10,7 +10,7 @@ const {
 // /api/users
 router.route('/')
   .get(getUsers)
-  .post(createUser)
+  .post(createUser);
 
 // /api/users/:userId
 router.route('/:userId')
