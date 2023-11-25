@@ -5,6 +5,6 @@ const apiRoutes = require('./api');
 router.use('/api', apiRoutes);
 
 // for '/' or anything else, send an error message
-router.use((req, res) => res.send('Wront route!'));
+router.use((req, res) => res.send('Wrong route!'));
 
 module.exports = router;

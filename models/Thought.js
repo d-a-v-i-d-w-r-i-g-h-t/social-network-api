@@ -4,10 +4,6 @@ const reactionSchema = require('./Reaction');
 // Schema to create User model
 const thoughtSchema = new Schema(
   {
-    thoughtId: {
-      type: Schema.Types.ObjectId,
-      default: ()=> new Types.ObjectId(),
-    },
     thoughtText: {
       type: String,
       required: true,
@@ -30,9 +26,14 @@ const thoughtSchema = new Schema(
     toJSON: {
       virtuals: true,
     },
-    id: false,
+    id: true,
   }
-);
+  );
+
+  // virtual reactionCount that retrieves the length of the user's reaction array field
+  thoughtSchema.virtual('reactionCount').get(function () {
+    return this.reactions.length;
+  });  
 
 const Thought = model('thought', thoughtSchema);
 
