@@ -1,5 +1,5 @@
-A video walkthrough demonstrating API functionality and CRUD operations using [Insomnia](https://insomnia.rest/) is available [here](https://watch.screencastify.com/v/qQQh7IQ5dYfWBdVNudDg).
-# Your Project Title
+
+# Social Network API
 
 ## Description 
 
@@ -11,37 +11,34 @@ There's no one right way to structure a good README. There is one very wrong way
 
 At a minimum, your project README needs a title and a short description explaining the what, why, and how. What was your motivation? Why did you build this project? (Note: The answer is not "Because it was a homework assignment.") What problem does it solve? What did you learn? What makes your project stand out? 
 
-Lastly, if your project is deployed, include a link to the deployed application here.
-
-If you're new to Markdown, read the GitHub guide on [Mastering Markdown](https://guides.github.com/features/mastering-markdown/).
-
-If you need an example of a good README, check out [the VSCode repository](https://github.com/microsoft/vscode).
-
-
-## Table of Contents (Optional)
-
-If your README is very long, add a table of contents to make it easy for users to find what they need.
-
-* [Installation](#installation)
-* [Usage](#usage)
-* [Credits](#credits)
-* [License](#license)
+A video walkthrough demonstrating API functionality and CRUD operations using [Insomnia](https://insomnia.rest/) is available [here](https://watch.screencastify.com/v/qQQh7IQ5dYfWBdVNudDg).
 
 
 ## Installation
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+Copy the files and folders from the repo into the desired directory.
+
+From the root folder, install dependencies with the command
+```
+npm install
+```
 
 
 ## Usage 
 
-Provide instructions and examples for use. Include screenshots as needed. 
-
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
-
-```md
-![alt text](assets/images/screenshot.png)
+To seed the database, from the root folder use the command
 ```
+npm run seed
+```
+To start the server, use the command
+```
+npm start
+```
+The result of these commands is shown below.
+
+![alt text](assets/images/install-seed-start.png)
+
+Once the server is listening, the API functionality can be tested using [Insomnia](https://insomnia.rest/).
 
 
 ## Credits
