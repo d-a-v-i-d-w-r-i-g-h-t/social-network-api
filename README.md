@@ -3,13 +3,19 @@
 
 ## Description 
 
-Your GitHub profile is an extremely important aspect of your public identity as a developer. A well-crafted one allows you to show off your work to other developers as well as potential employers. An important component of your GitHub profile—and one that many new developers often overlook—is the README.md file.
+For this project, I created an API for a social network web application, where users can share their thoughts, react to their friends' thoughts, and create a friend list by connecting with other users. This required careful structuring and linking of the data models **User**, **Thought**, and **Reaction**.
 
-The quality of a README often differentiates a good project from a bad project. A good one takes advantage of the opportunity to explain and showcase what your application does, justify the technologies used, and even talk about some of the challenges you faced and features you hope to implement in the future. A good README helps you stand out among the large crowd of developers putting their work on GitHub.
+I needed to make sure that the controllers were thorough in proper link creation and removal during post (create) and delete requests. For example, when a thought is deleted, the corresponding thought id in the user's *thoughts* array must also be deleted. If a user is deleted, all of that user's thoughts must be deleted, and the deleted user's id must also be removed from any other users' *friends* arrays that contain it.
 
-There's no one right way to structure a good README. There is one very wrong way, however, and that is to not include a README at all or to create a very anemic one. This guide outlines a few best practices. As you progress in your career, you will develop your own ideas about what makes a good README.
+I also had to ensure that user input was consistent, with clear messaging for user errors. This meant checking if a user existed prior to creating or modifying a thought specified for a particular username, and checking if a username was already in use before creating a new user.
 
-At a minimum, your project README needs a title and a short description explaining the what, why, and how. What was your motivation? Why did you build this project? (Note: The answer is not "Because it was a homework assignment.") What problem does it solve? What did you learn? What makes your project stand out? 
+To accomplish all of this, I used a **MongoDB** database with the **Mongoose** Object-Document Mapper (ODM). Using Mongoose allowed me to take advantage of some additional features, such as virtuals and getters.
+
+**Virtuals** are unstored properties defined in the schema and computed on the fly during queries. For this project, I created the virtuals ```friendCount``` and ```thoughtCount```, the total numbers of a user's friends and thoughts, respectively.
+
+**Getters** are functions that modify data from the database prior to presentation to the user, while leaving the data in the database unchanged. Here, I used a getter function called ```formatDate``` to format the auto-generated date string for thoughts and reactions into something a bit more user-friendly.
+
+This project provided a great experience in checking edge cases and taking advantage of available features to create a successful back-end application.
 
 A video walkthrough demonstrating API functionality and CRUD operations using [Insomnia](https://insomnia.rest/) is available [here](https://watch.screencastify.com/v/qQQh7IQ5dYfWBdVNudDg).
 
@@ -47,7 +53,7 @@ Once the server is listening, the API functionality can be tested using [Insomni
 
 I used [Express](https://www.npmjs.com/package/express/v/4.18.2) to manage routing .
 
-I used [Mongoose](https://www.npmjs.com/package/mongoose/v/8.0.1) for MongoDB object modeling.
+I used [Mongoose](https://www.npmjs.com/package/mongoose/v/8.0.1) for [MongoDB](https://www.mongodb.com/) object modeling.
 
 I used [nodemon](https://www.npmjs.com/package/nodemon/v/3.0.1) for automatic server restart during development testing.
 
