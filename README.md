@@ -1,0 +1,1 @@
+A video walkthrough demonstrating route functionality and CRUD operations using [Insomnia](https://insomnia.rest/) is available [here](https://watch.screencastify.com/v/qQQh7IQ5dYfWBdVNudDg).
