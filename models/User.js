@@ -19,7 +19,7 @@ const userSchema = new Schema(
         // email address validation
         validator: function(value) {
           const emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
-          return emailRegex.text(value);
+          return emailRegex.test(value);
         },
         message: 'Invalid email address. Please try again.',
       },
@@ -41,7 +41,7 @@ const userSchema = new Schema(
     toJSON: {
       virtuals: true,
     },
-    id: true,
+    id: false,
   }
 );
 

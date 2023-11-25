@@ -38,6 +38,15 @@ module.exports = {
   // Create a user
   async createUser(req, res) {
     try {
+      const existingUser = await User.findOne({
+        username: req.body.username
+      });
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({ message: 'Username is already in use. Please try a different one. '});
+      }
+      
       const user = await User.create(req.body);
       res.json(user);
     } catch (err) {
@@ -52,12 +61,12 @@ module.exports = {
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate(
-        { _id: req.params.courseId },
+        { _id: req.params.userId },
         { $set: req.body },
         { runValidators: true, new: true }
       );
 
-      if (!course) {
+      if (!user) {
         return res
           .status(404)
           .json({ message: 'No user with this ID!'});
