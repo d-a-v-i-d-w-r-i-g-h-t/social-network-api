@@ -70,19 +70,26 @@ module.exports = {
   // Update a thought
   async updateThought(req, res) {
     try {
-      const thought = await Thought.findOneAndUpdate(
+      // check if the thought exists and belongs to the specified user
+      const thought = await Thought.findOne({ 
+        _id: req.params.thoughtId,
+        username: req.body.username,
+      });
+
+      if (!thought) {
+        return res
+          .status(404)
+          .json({ message: 'No thought with this ID for the specified user!' });
+      }
+
+      // update the thought
+      const updatedThought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
         { $set: req.body },
         {runValidators: true, new: true }
       );
 
-      if (!thought) {
-        return res
-          .status(404)
-          .json({ message: 'No thought with this ID!' });
-      }
-
-      res.json(thought);
+      res.json(updatedThought);
     } catch (err) {
       res
         .status(500)
