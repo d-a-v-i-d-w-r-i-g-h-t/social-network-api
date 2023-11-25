@@ -98,6 +98,13 @@ module.exports = {
         { _id: { $in: user.thoughts } }
       );
 
+      // remove user from other users' friends lists when deleted
+      const formerFriend = await User.findOneAndUpdate(
+        { friends: req.params.userId },
+        { $pull: { friends: req.params.userId } },
+        { new: true }
+      );
+
       res.json({ message: 'User and thoughts deleted!' });
     } catch (err) {
       res
@@ -109,8 +116,6 @@ module.exports = {
   // Add a friend to a user
   async addFriend(req, res) {
     try {
-      console.log('You are adding a friend');
-      console.log(req.body);
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
         { $addToSet: { friends: req.params.friendId } },
@@ -136,7 +141,7 @@ module.exports = {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $pull: { friends: { friendId: req.params.friendId } } },
+        { $pull: { friends: req.params.friendId } },
         { runValidators: true, new: true }
       );
 

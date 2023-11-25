@@ -40,20 +40,24 @@ module.exports = {
   // Create a thought
   async createThought(req, res) {
     try {
-      const thought = await Thought.create(req.body);
+      // check if user exists
+      const user = await User.findOne({ username: req.body.username });
 
+      if (!user) {
+        return res
+        .status(404)
+        .json({ message: 'User not found!' });
+      }
+
+      // create the new thought
+      const thought = await Thought.create(req.body);
+      
       // update associated user's thoughts array
-      const user = await User.findOneAndUpdate(
+      const updatedUser = await User.findOneAndUpdate(
         { username: req.body.username },
         { $addToSet: { thoughts: thought._id } },
         { new: true }
       );
-
-      if (!user) {
-        return res
-          .status(404)
-          .json({ message: 'Associated user not found!' });
-      }
 
       res.json(thought);
     } catch (err) {

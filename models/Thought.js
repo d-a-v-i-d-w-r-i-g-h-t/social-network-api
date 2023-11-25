@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
+const formatDate = require('../utils/formatDate');
 
 // Schema to create User model
 const thoughtSchema = new Schema(
@@ -14,6 +15,7 @@ const thoughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
+      get: formatDate,
     },
     username: {
         type: String,
@@ -25,6 +27,7 @@ const thoughtSchema = new Schema(
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
   }
