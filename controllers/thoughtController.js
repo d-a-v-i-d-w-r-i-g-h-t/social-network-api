@@ -5,7 +5,8 @@ module.exports = {
   // Get all thoughts
   async getThoughts(req, res) {
     try {
-      const thoughts = await Thought.find();
+      const thoughts = await Thought.find().select('-__v');
+      ;
       res.json(thoughts);
     } catch (err) {
       res
@@ -97,6 +98,21 @@ module.exports = {
           .status(404)
           .json({ message: 'No thought with this ID!' });
       }
+      
+      // update associated user's thoughts array
+      const user = await User.findOneAndUpdate(
+        { username: thought.username },
+        { $pull: { thoughts: req.params.thoughtId } },
+        { new: true }
+      );
+
+      if (!user) {
+        return res
+          .status(404)
+          .json({ message: 'Associated user not found!' });
+      }
+
+      res.json({ message: 'Thought successfully deleted' });
     } catch (err) {
       res
         .status(500)

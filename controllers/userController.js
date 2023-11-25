@@ -5,7 +5,7 @@ module.exports = {
   // Get all users
   async getUsers(req, res) {
     try {
-      const users = await User.find();
+      const users = await User.find().select('-__v');
       res.json(users);
     } catch (err) {
       res
@@ -44,7 +44,7 @@ module.exports = {
       if (existingUser) {
         return res
           .status(400)
-          .json({ message: 'Username is already in use. Please try a different one. '});
+          .json({ message: `The username '${req.body.username}' is already in use. Please try a different one.`});
       }
       
       const user = await User.create(req.body);
@@ -97,6 +97,7 @@ module.exports = {
       await Thought.deleteMany(
         { _id: { $in: user.thoughts } }
       );
+
       res.json({ message: 'User and thoughts deleted!' });
     } catch (err) {
       res

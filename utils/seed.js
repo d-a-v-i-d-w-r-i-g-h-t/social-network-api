@@ -19,7 +19,7 @@ connection.once('open', async () => {
   if (thoughtsCheck.length) {
     await connection.dropCollection('thoughts');
   }
-  
+
   // bring in user data
   const users = userData;
 
@@ -27,10 +27,19 @@ connection.once('open', async () => {
   const thoughts = thoughtData;
 
   // add users to the collection
-  await User.collection.insertMany(users);
+  // await User.collection.insertMany(users);
+  const createdUsers = await User.create(users);
 
   // add thoughts to the collection
-  await Thought.collection.insertMany(thoughts);
+  // await Thought.collection.insertMany(thoughts);
+  const createdThoughts = await Thought.create(thoughts);
+
+  // link the thought ids with the users
+  for (const thought of createdThoughts) {
+    const user = createdUsers.find((user) => user.username === thought.username);
+    user.thoughts.push(thought._id);
+    await user.save();
+  }
 
   // show the seeded data
   console.table(users);
